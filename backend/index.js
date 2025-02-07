@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs"; // Ensure bcryptjs is used for Vercel
 
 import UserModel from "./models/Users.js";
 import BKroom from "./models/BKrooms.js";
@@ -17,21 +17,27 @@ app.use(express.json());
 // ✅ CORS Configuration (Replace with your actual frontend URL)
 app.use(
   cors({
-    origin: ["https://frontend-seven-pi-39.vercel.app"], // Allow only frontend domain
+    origin: ["https://hms-seven-silk.vercel.app"], // Allow only frontend domain
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-// ✅ MongoDB Connection Function (Ensures Connection on Vercel)
+// ✅ MongoDB Connection Middleware
 const connectDB = async () => {
   if (mongoose.connection.readyState === 1) return;
-  await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("✅ MongoDB Connected");
+  } catch (error) {
+    console.error("❌ MongoDB Connection Error:", error);
+  }
 };
 
+// ✅ Root Route
 app.get("/", (req, res) => {
   res.send("Hello, your backend is deployed successfully!");
 });
@@ -47,7 +53,7 @@ app.post("/signup", async (req, res) => {
     if (existingUser) return res.status(400).json({ message: "User already exists" });
 
     const userCount = await UserModel.countDocuments();
-    const userId = userCount === 0 ? 1 : (await UserModel.findOne({}, { userId: 1 }).sort({ userId: -1 })).userId + 1;
+    const userId = userCount + 1; // Generate userId based on count
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({ userId, firstname, lastname, email, phone, password: hashedPassword });
@@ -88,7 +94,7 @@ app.post("/book", async (req, res) => {
     const { day, roomType, roomQuantity, adults, children, selectedValue } = req.body;
 
     const roomCount = await BKroom.countDocuments();
-    const roomId = roomCount === 0 ? 1 : (await BKroom.findOne({}, { roomId: 1 }).sort({ roomId: -1 })).roomId + 1;
+    const roomId = roomCount + 1;
 
     const newRoom = new BKroom({ roomId, day, roomType, roomQuantity, adults, children, selectedValue });
     await newRoom.save();
@@ -108,7 +114,7 @@ app.post("/event", async (req, res) => {
     const { day, eventType, adults, children, selectedValue } = req.body;
 
     const eventCount = await BKevent.countDocuments();
-    const eventId = eventCount === 0 ? 1 : (await BKevent.findOne({}, { eventId: 1 }).sort({ eventId: -1 })).eventId + 1;
+    const eventId = eventCount + 1;
 
     const newEvent = new BKevent({ eventId, day, eventType, adults, children, selectedValue });
     await newEvent.save();
@@ -128,7 +134,7 @@ app.post("/order", async (req, res) => {
     const { orderType, colddrink, desert } = req.body;
 
     const orderCount = await BKorder.countDocuments();
-    const orderId = orderCount === 0 ? 1 : (await BKorder.findOne({}, { orderId: 1 }).sort({ orderId: -1 })).orderId + 1;
+    const orderId = orderCount + 1;
 
     const newOrder = new BKorder({ orderId, orderType, colddrink, desert });
     await newOrder.save();
