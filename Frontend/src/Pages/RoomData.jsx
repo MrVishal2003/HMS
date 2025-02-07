@@ -9,7 +9,7 @@ function RoomData() {
   useEffect(() => {
     // Fetch rooms from backend when component mounts
     axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/bkrooms`)
+      .get('https://hms-api-ten.vercel.app/bkrooms')
       .then((response) => {
         setRooms(response.data);
       })
@@ -22,7 +22,7 @@ function RoomData() {
     // Send DELETE request to delete room
     console.log(roomId);
     axios
-      .delete(`http://localhost:3000/bkrooms/${roomId}`)
+      .delete('https://hms-api-ten.vercel.app/bkrooms/${roomId}')
       .then(() => {
         console.log("room deleted successfully");
         // Update the rooms state by filtering out the deleted room

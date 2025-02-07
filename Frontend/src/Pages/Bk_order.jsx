@@ -22,7 +22,7 @@ const BkOrder = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/order`, {
+      .post('https://hms-api-ten.vercel.app/order', {
         orderType,
         colddrink,
         desert,

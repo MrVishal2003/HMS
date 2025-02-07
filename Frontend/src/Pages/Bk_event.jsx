@@ -30,7 +30,7 @@ const BkEvent = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/event`, {
+      .post('https://hms-api-ten.vercel.app/event', {
         day,
         eventType,
         adults,

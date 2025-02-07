@@ -9,7 +9,7 @@ function EventData() {
   useEffect(() => {
     // Fetch rooms from backend when component mounts
     axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/bkevent`)
+      .get('https://hms-api-ten.vercel.app/bkevent')
       .then((response) => {
         setEvents(response.data);
       })
@@ -22,7 +22,7 @@ function EventData() {
     // Send DELETE request to delete room
     console.log(eventId);
     axios
-      .delete(`${import.meta.env.VITE_API_BASE_URL}/bkevent/${eventId}`)
+      .delete('https://hms-api-ten.vercel.app/bkevent/${eventId}')
       .then(() => {
         console.log("event deleted successfully");
         // Update the rooms state by filtering out the deleted room

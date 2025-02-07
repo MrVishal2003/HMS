@@ -30,7 +30,7 @@ const BkRoom = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/book`, {
+      .post('https://hms-api-ten.vercel.app/book', {
         day,
         roomType,
         roomQuantity,

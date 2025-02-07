@@ -18,7 +18,7 @@ function Signup() {
   const handleSignup = (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/signup`, {
+      .post('https://hms-api-ten.vercel.app/signup', {
         firstname,
         lastname,
         email,

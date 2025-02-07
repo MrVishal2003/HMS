@@ -9,7 +9,7 @@ function UserData() {
   useEffect(() => {
     // Fetch users from backend when component mounts
     axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/admin/users`)
+      .get('https://hms-api-ten.vercel.app}/admin/users')
       .then((response) => {
         setUsers(response.data);
       })
@@ -22,7 +22,7 @@ function UserData() {
     // Send DELETE request to delete user
     console.log(email);
     axios
-      .delete(`${import.meta.env.VITE_API_BASE_URL}/admin/users/${email}`)
+      .delete('https://hms-api-ten.vercel.app/admin/users/${email}')
       .then(() => {
         console.log("User deleted successfully");
         // Update the users state by filtering out the deleted user

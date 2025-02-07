@@ -32,7 +32,7 @@ function Login() {
     }
 
     axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/signin`, { email, password })
+      .post('https://hms-api-ten.vercel.app/signin', { email, password })
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("isLoggedIn", "true");
