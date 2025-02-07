@@ -9,7 +9,7 @@ function OrderData() {
   useEffect(() => {
     // Fetch orders from backend when component mounts
     axios
-      .get("http://localhost:3000/bkorder")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/bkorder`)
       .then((response) => {
         setOrders(response.data);
       })
@@ -22,7 +22,7 @@ function OrderData() {
     // Send DELETE request to delete order
     console.log(orderId);
     axios
-      .delete(`http://localhost:3000/bkorder/${orderId}`)
+      .delete(`${import.meta.env.VITE_API_BASE_URL}/bkorder/${orderId}`)
       .then(() => {
         console.log("order deleted successfully");
         // Update the orders state by filtering out the deleted order

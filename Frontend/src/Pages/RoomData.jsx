@@ -9,7 +9,7 @@ function RoomData() {
   useEffect(() => {
     // Fetch rooms from backend when component mounts
     axios
-      .get("http://localhost:3000/bkrooms")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/bkrooms`)
       .then((response) => {
         setRooms(response.data);
       })

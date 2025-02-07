@@ -30,7 +30,7 @@ const BkRoom = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/book", {
+      .post(`${import.meta.env.VITE_API_BASE_URL}/book`, {
         day,
         roomType,
         roomQuantity,

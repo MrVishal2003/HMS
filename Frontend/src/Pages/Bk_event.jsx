@@ -30,7 +30,7 @@ const BkEvent = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/event", {
+      .post(`${import.meta.env.VITE_API_BASE_URL}/event`, {
         day,
         eventType,
         adults,

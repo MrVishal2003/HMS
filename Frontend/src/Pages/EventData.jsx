@@ -9,7 +9,7 @@ function EventData() {
   useEffect(() => {
     // Fetch rooms from backend when component mounts
     axios
-      .get("http://localhost:3000/bkevent")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/bkevent`)
       .then((response) => {
         setEvents(response.data);
       })
@@ -22,7 +22,7 @@ function EventData() {
     // Send DELETE request to delete room
     console.log(eventId);
     axios
-      .delete(`http://localhost:3000/bkevent/${eventId}`)
+      .delete(`${import.meta.env.VITE_API_BASE_URL}/bkevent/${eventId}`)
       .then(() => {
         console.log("event deleted successfully");
         // Update the rooms state by filtering out the deleted room

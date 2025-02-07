@@ -22,7 +22,7 @@ const BkOrder = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/order", {
+      .post(`${import.meta.env.VITE_API_BASE_URL}/order`, {
         orderType,
         colddrink,
         desert,

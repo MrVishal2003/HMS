@@ -32,7 +32,7 @@ function Login() {
     }
 
     axios
-      .post("http://localhost:3000/signin", { email, password })
+      .post(`${import.meta.env.VITE_API_BASE_URL}/signin`, { email, password })
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("isLoggedIn", "true");
