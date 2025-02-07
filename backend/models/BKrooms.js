@@ -1,36 +1,14 @@
 import mongoose from "mongoose";
 
-const BKroomSchema = new mongoose.Schema({
-  roomId:{
-    type:Number,
-    required:true,
-  },
-  day: {
-    type: String,
-    required: true,
-  },
-  roomType: {
-    type: String,
-    required: true,
-  },
-  roomQuantity: {
-    type: String,
-    required: true,
-  },
-  adults: {
-    type: String,
-    required: true,
-  },
-  children: {
-    type: String,
-    required: true,
-  },
-  selectedValue:{
-    type: String,
-    required: true,
-  }
+const RoomSchema = new mongoose.Schema({
+  roomId: { type: Number, unique: true },
+  day: String,
+  roomType: String,
+  roomQuantity: Number,
+  adults: Number,
+  children: Number,
+  selectedValue: String,
 });
 
-const BKroom = mongoose.model("BKroom", BKroomSchema);
-
+const BKroom = mongoose.model("BKroom", RoomSchema);
 export default BKroom;

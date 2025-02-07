@@ -1,27 +1,11 @@
 import mongoose from "mongoose";
 
-const BKorderSchema = new mongoose.Schema({
-  orderId:{
-    type: Number,
-    required: true,
-  },
- 
-  orderType: {
-    type: String,
-    required: true,
-  },
-  
-  colddrink: {
-    type: String,
-    required: true,
-  },
-  desert: {
-    type: String,
-    required: true,
-  },
-  
+const OrderSchema = new mongoose.Schema({
+  orderId: { type: Number, unique: true },
+  orderType: String,
+  colddrink: String,
+  desert: String,
 });
 
-const BKorder = mongoose.model("BKorder", BKorderSchema);
-
+const BKorder = mongoose.model("BKorder", OrderSchema);
 export default BKorder;
