@@ -17,7 +17,7 @@ app.use(express.json());
 // ✅ CORS Configuration (Replace with your actual frontend URL)
 app.use(
   cors({
-    origin: ["https://hms-nine-lyart.vercel.app"], // Allow only frontend domain
+    origin: ["https://frontend-seven-pi-39.vercel.app"], // Allow only frontend domain
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
