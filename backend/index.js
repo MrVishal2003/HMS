@@ -15,16 +15,18 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// ✅ Secure MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((error) => console.error("❌ MongoDB connection error:", error));
+// ✅ MongoDB Connection (Ensures Reconnection for Vercel)
+const connectDB = async () => {
+  if (mongoose.connection.readyState === 1) return;
+  await mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+};
 
 // ✅ User Signup Route
 app.post("/signup", async (req, res) => {
+  await connectDB(); // Ensure DB connection
   try {
     const { firstname, lastname, email, phone, password, confirmpassword } = req.body;
 
@@ -54,6 +56,7 @@ app.post("/signup", async (req, res) => {
 
 // ✅ User Signin Route
 app.post("/signin", async (req, res) => {
+  await connectDB();
   try {
     const { email, password } = req.body;
 
@@ -73,6 +76,7 @@ app.post("/signin", async (req, res) => {
 
 // ✅ Book Room Route
 app.post("/book", async (req, res) => {
+  await connectDB();
   try {
     const { day, roomType, roomQuantity, adults, children, selectedValue } = req.body;
 
@@ -90,46 +94,9 @@ app.post("/book", async (req, res) => {
   }
 });
 
-// ✅ Book Event Route
-app.post("/event", async (req, res) => {
-  try {
-    const { day, eventType, adults, children, selectedValue } = req.body;
-
-    const eventCount = await BKevent.countDocuments();
-    const eventId = eventCount === 0 ? 1 : (await BKevent.findOne({}, { eventId: 1 }).sort({ eventId: -1 })).eventId + 1;
-
-    const newEvent = new BKevent({ eventId, day, eventType, adults, children, selectedValue });
-    await newEvent.save();
-
-    res.status(201).json({ message: "Event booked successfully", eventId });
-
-  } catch (error) {
-    console.error("Error booking event:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// ✅ Book Order Route
-app.post("/order", async (req, res) => {
-  try {
-    const { orderType, colddrink, desert } = req.body;
-
-    const orderCount = await BKorder.countDocuments();
-    const orderId = orderCount === 0 ? 1 : (await BKorder.findOne({}, { orderId: 1 }).sort({ orderId: -1 })).orderId + 1;
-
-    const newOrder = new BKorder({ orderId, orderType, colddrink, desert });
-    await newOrder.save();
-
-    res.status(201).json({ message: "Order booked successfully", orderId });
-
-  } catch (error) {
-    console.error("Error booking order:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// ✅ Get All Users Route
+// ✅ Admin: Get All Users
 app.get("/admin/users", async (req, res) => {
+  await connectDB();
   try {
     const users = await UserModel.find().lean();
     res.json(users);
@@ -141,6 +108,7 @@ app.get("/admin/users", async (req, res) => {
 
 // ✅ Delete User Route
 app.delete("/admin/users/:email", async (req, res) => {
+  await connectDB();
   try {
     await UserModel.findOneAndDelete({ email: req.params.email });
     res.json({ message: "User deleted successfully" });
@@ -151,41 +119,5 @@ app.delete("/admin/users/:email", async (req, res) => {
   }
 });
 
-// ✅ Delete Room Route
-app.delete("/bkrooms/:roomId", async (req, res) => {
-  try {
-    await BKroom.findOneAndDelete({ roomId: Number(req.params.roomId) });
-    res.json({ message: "Room deleted successfully" });
-
-  } catch (error) {
-    console.error("Error deleting room:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// ✅ Delete Event Route
-app.delete("/bkevent/:eventId", async (req, res) => {
-  try {
-    await BKevent.findOneAndDelete({ eventId: Number(req.params.eventId) });
-    res.json({ message: "Event deleted successfully" });
-
-  } catch (error) {
-    console.error("Error deleting event:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// ✅ Delete Order Route
-app.delete("/bkorder/:orderId", async (req, res) => {
-  try {
-    await BKorder.findOneAndDelete({ orderId: Number(req.params.orderId) });
-    res.json({ message: "Order deleted successfully" });
-
-  } catch (error) {
-    console.error("Error deleting order:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// ✅ Start Server
-app.listen(3000, () => console.log("🚀 Server started on port 3000"));
+// ✅ Export for Vercel
+export default app;
