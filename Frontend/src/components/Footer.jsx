@@ -47,11 +47,11 @@ function Footer() {
             </h2>
             <p>
               <ShareLocationIcon />
-              Address: Habibi Road,Sheikh Colony,Dubai
+              Address: SG Highway, Ahmedabad
             </p>
             <p>
               <PhoneInTalkIcon />
-              Phone number: +2349061504648
+              Phone number: +919725771714
             </p>
             <p>
               <MarkEmailReadIcon />
