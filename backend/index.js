@@ -13,9 +13,17 @@ dotenv.config(); // Load environment variables
 
 const app = express();
 app.use(express.json());
-app.use(cors());
 
-// ✅ MongoDB Connection (Ensures Reconnection for Vercel)
+// ✅ CORS Configuration (Replace with your actual frontend URL)
+app.use(
+  cors({
+    origin: ["https://hms-nine-lyart.vercel.app"], // Allow only frontend domain
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+// ✅ MongoDB Connection Function (Ensures Connection on Vercel)
 const connectDB = async () => {
   if (mongoose.connection.readyState === 1) return;
   await mongoose.connect(process.env.MONGO_URI, {
@@ -26,18 +34,13 @@ const connectDB = async () => {
 
 // ✅ User Signup Route
 app.post("/signup", async (req, res) => {
-  await connectDB(); // Ensure DB connection
+  await connectDB();
   try {
     const { firstname, lastname, email, phone, password, confirmpassword } = req.body;
-
-    if (password !== confirmpassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
-    }
+    if (password !== confirmpassword) return res.status(400).json({ message: "Passwords do not match" });
 
     const existingUser = await UserModel.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
-    }
+    if (existingUser) return res.status(400).json({ message: "User already exists" });
 
     const userCount = await UserModel.countDocuments();
     const userId = userCount === 0 ? 1 : (await UserModel.findOne({}, { userId: 1 }).sort({ userId: -1 })).userId + 1;
@@ -94,7 +97,47 @@ app.post("/book", async (req, res) => {
   }
 });
 
-// ✅ Admin: Get All Users
+// ✅ Book Event Route
+app.post("/event", async (req, res) => {
+  await connectDB();
+  try {
+    const { day, eventType, adults, children, selectedValue } = req.body;
+
+    const eventCount = await BKevent.countDocuments();
+    const eventId = eventCount === 0 ? 1 : (await BKevent.findOne({}, { eventId: 1 }).sort({ eventId: -1 })).eventId + 1;
+
+    const newEvent = new BKevent({ eventId, day, eventType, adults, children, selectedValue });
+    await newEvent.save();
+
+    res.status(201).json({ message: "Event booked successfully", eventId });
+
+  } catch (error) {
+    console.error("Error booking event:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ✅ Book Order Route
+app.post("/order", async (req, res) => {
+  await connectDB();
+  try {
+    const { orderType, colddrink, desert } = req.body;
+
+    const orderCount = await BKorder.countDocuments();
+    const orderId = orderCount === 0 ? 1 : (await BKorder.findOne({}, { orderId: 1 }).sort({ orderId: -1 })).orderId + 1;
+
+    const newOrder = new BKorder({ orderId, orderType, colddrink, desert });
+    await newOrder.save();
+
+    res.status(201).json({ message: "Order booked successfully", orderId });
+
+  } catch (error) {
+    console.error("Error booking order:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ✅ Get All Users Route
 app.get("/admin/users", async (req, res) => {
   await connectDB();
   try {
@@ -115,6 +158,45 @@ app.delete("/admin/users/:email", async (req, res) => {
 
   } catch (error) {
     console.error("Error deleting user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ✅ Delete Room Route
+app.delete("/bkrooms/:roomId", async (req, res) => {
+  await connectDB();
+  try {
+    await BKroom.findOneAndDelete({ roomId: Number(req.params.roomId) });
+    res.json({ message: "Room deleted successfully" });
+
+  } catch (error) {
+    console.error("Error deleting room:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ✅ Delete Event Route
+app.delete("/bkevent/:eventId", async (req, res) => {
+  await connectDB();
+  try {
+    await BKevent.findOneAndDelete({ eventId: Number(req.params.eventId) });
+    res.json({ message: "Event deleted successfully" });
+
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ✅ Delete Order Route
+app.delete("/bkorder/:orderId", async (req, res) => {
+  await connectDB();
+  try {
+    await BKorder.findOneAndDelete({ orderId: Number(req.params.orderId) });
+    res.json({ message: "Order deleted successfully" });
+
+  } catch (error) {
+    console.error("Error deleting order:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
