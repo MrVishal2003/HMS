@@ -32,6 +32,10 @@ const connectDB = async () => {
   });
 };
 
+app.get("/", (req, res) => {
+  res.send("Hello, your backend is deployed successfully!");
+});
+
 // ✅ User Signup Route
 app.post("/signup", async (req, res) => {
   await connectDB();
