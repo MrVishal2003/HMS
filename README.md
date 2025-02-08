@@ -22,14 +22,14 @@ The MERN Hotel Management System is a full-stack web application that allows hot
 ## Tech Stack
 - **Frontend:** React.js, Redux, Tailwind CSS
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB, Mongoose
+- **Database:** MongoDB Atlas, Mongoose
 - **Authentication:** JSON Web Tokens (JWT)
 - **Hosting:** Vercel (Frontend), Render/Heroku (Backend)
 
 ## Installation
 ### Prerequisites
 - Node.js (v16 or later)
-- MongoDB (local or Atlas)
+- MongoDB Atlas account
 - Git
 
 ### Steps to Run the Project
@@ -48,7 +48,7 @@ The MERN Hotel Management System is a full-stack web application that allows hot
 3. Configure environment variables:
    - Create a `.env` file in the `backend` directory with:
      ```
-     MONGO_URI=your_mongodb_connection_string
+     MONGO_URI=your_mongodb_atlas_connection_string
      JWT_SECRET=your_secret_key
      ```
    - Create a `.env` file in the `frontend` directory with:
