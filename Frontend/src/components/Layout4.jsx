@@ -5,31 +5,32 @@ import { NavLink } from "react-router-dom";
 
 const Layout4 = (props) => {
   return (
-    <>
-      <div className="w-[30%] flex justify-center m-5">
-        <Card
-          hoverable
-          className="bg-creme"
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src={props.img}
-              className="h-44 brightness-90 hover:brightness-100 "
-            />
-          }
-        >
-          <div className="flex justify-around items-center">
-            <h2 className="text-xl font-semibold text-maroon">{props.name}</h2>
-            <NavLink to="/BookOrder">
-              <Button name="Order" color2="dark" />
-            </NavLink>
-          </div>
-          <hr className=" border-maroon mb-1" />
-          <p className="text-maroon">{props.description}</p>
-        </Card>
-      </div>
-    </>
+    <div className="w-full sm:w-[30%] flex justify-center m-5">
+      <Card
+        hoverable
+        className="bg-creme w-full sm:w-72"
+        cover={
+          <img
+            alt="example"
+            src={props.img}
+            className="h-40 sm:h-44 w-full object-cover brightness-90 hover:brightness-100"
+          />
+        }
+      >
+        <div className="flex flex-col sm:flex-row justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-semibold text-maroon text-center sm:text-left">
+            {props.name}
+          </h2>
+          <NavLink to="/BookOrder">
+            <Button name="Order" color2="dark" />
+          </NavLink>
+        </div>
+        <hr className="border-maroon my-2" />
+        <p className="text-maroon text-sm sm:text-base text-center sm:text-left">
+          {props.description}
+        </p>
+      </Card>
+    </div>
   );
 };
 

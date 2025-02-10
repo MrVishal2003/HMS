@@ -13,10 +13,10 @@ import Navbar from "../components/Navbar";
 function Dining() {
   return (
     <>
-    <Navbar />
-
+      <Navbar />
       <Layout1 name="DINING" img={img} />
-      <div className="flex justify-center flex-wrap m-5">
+
+      <div className="flex justify-center flex-wrap gap-5 px-4 mt-5">
         <Layout4
           name="Gujarati"
           img={img2}
@@ -35,10 +35,10 @@ function Dining() {
         <Layout4
           name="Fastfood"
           img={img5}
-          description=" Unleash your inner foodie with tastes that elevate your dining experience.The ultimate fast-food feast! Savor cheesy pizzas, burgers, and crispy fries. A paradise for every foodie's cravings!"
+          description="Unleash your inner foodie with tastes that elevate your dining experience. The ultimate fast-food feast! Savor cheesy pizzas, burgers, and crispy fries. A paradise for every foodie's cravings!"
         />
         <Layout4
-          name="Desert"
+          name="Dessert"
           img={img6}
           description="Dive into the world of delectable desserts! Satisfy your sweet tooth with heavenly treats like creamy cakes, luscious ice creams, and pastries. A delightful haven for dessert enthusiasts!"
         />

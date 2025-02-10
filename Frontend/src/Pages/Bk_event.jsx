@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 const BkEvent = () => {
   const { Option } = Select;
-  // const navigate = useNavigate();
-
   const [eventType, setEventType] = useState("");
   const [day, setDay] = useState("");
   const [adults, setAdults] = useState("");
@@ -29,176 +27,138 @@ const BkEvent = () => {
 
   const handleBooking = async (e) => {
     e.preventDefault();
-    axios
-      .post('https://hms-api-ten.vercel.app/event', {
+    try {
+      const response = await axios.post('https://hms-api-ten.vercel.app/event', {
         day,
         eventType,
         adults,
         children,
         selectedValue,
-      })
-      .then((response) => {
-        axios.get();
-        if (response.status === 201) {
-          // Successful login
-          console.log("succesful", response.data.message);
-          navigate("/Events");
-        } else {
-          // Handle login failure
-          console.error("Login failed:");
-          // alert("Data Entered Succesfully");
-
-          // navigate("/Events", { state: { id: eventType } });
-        }
-      })
-      .catch((error) => {
-        // Handle network errors or other exceptions
-        console.error("Error logging in:", error);
-        alert("Error logging in. Please try again.");
       });
+
+      if (response.status === 201) {
+        console.log("Booking successful", response.data.message);
+        navigate("/Events");
+      } else {
+        console.error("Booking failed:");
+        alert("Booking failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error. Please try again.");
+    }
   };
 
   const controlProps = (item) => ({
     checked: selectedValue === item,
     onChange: handleChange,
     value: item,
-    name: "color-radio-button-demo",
+    name: "room-type",
     inputProps: { "aria-label": item },
   });
 
   return (
-    <>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-maroon">
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md flex justify-center flex-wrap">
-          <h2 className="text-2xl font-semibold flex justify-center mb-8">
-            BOOK YOUR DREAM EVENT
-          </h2>
-          <form className="space-y-4" onSubmit={handleBooking}>
-            <input
-              min="0"
-              max="10"
-              type="number"
-              className="border border-gray p-2 w-full rounded-md mb-5"
-              placeholder="Day"
-              value={day}
-              onChange={(e) => setDay(e.target.value)}
-              required
-            />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">
+          BOOK YOUR DREAM EVENT
+        </h2>
+        
+        <form className="space-y-4" onSubmit={handleBooking}>
+          <input
+            type="number"
+            min="1"
+            className="border border-gray-300 p-2 w-full rounded-md"
+            placeholder="Enter Days"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+            required
+          />
 
-            <div className="flex justify-center space-x-5">
-              <div className="w-52">
-                <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select Events"
-                    onChange={(value) => setEventType(value)}
-                  >
-                    <Option value="Wedding">Wedding</Option>
-                    <Option value="Birthday">Birthday</Option>
-                    <Option value="Anniversary">Anniversary</Option>
-                    <Option value="Cultural">Cultural</Option>
-                    <Option value="Festival">Festival</Option>
-                    <Option value="Gathering">Gathering</Option>
-                  </Select>
-                </Form.Item>
-              </div>
-            </div>
+          <div className="flex flex-col md:flex-row md:space-x-4">
+            <Form.Item className="w-full">
+              <Select
+                placeholder="Select Event Type"
+                className="w-full"
+                onChange={(value) => setEventType(value)}
+              >
+                <Option value="Wedding">Wedding</Option>
+                <Option value="Birthday">Birthday</Option>
+                <Option value="Anniversary">Anniversary</Option>
+                <Option value="Cultural">Cultural</Option>
+                <Option value="Festival">Festival</Option>
+                <Option value="Gathering">Gathering</Option>
+              </Select>
+            </Form.Item>
+          </div>
 
-            <div className="flex justify-center space-x-5">
-              <div className="w-1/2">
-                <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select a room type",
-                    },
-                  ]}
-                >
-                  <Select
-                    placeholder="Adults"
-                    onChange={(value) => setAdults(value)}
-                    className="custom-border-style"
-                    required
-                  >
-                    <Option value="0-50">0-50</Option>
-                    <Option value="100-200">100-200</Option>
-                    <Option value="200-300">200-300</Option>
-                    <Option value="More">More</Option>
-                  </Select>
-                </Form.Item>
-              </div>
-              <div className="w-1/2">
-                <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Select
-                    placeholder="Children"
-                    onChange={(value) => setChildren(value)}
-                  >
-                    <Option value="0">0</Option>
-                    <Option value="10-20">10-20</Option>
-                    <Option value="30-40">30-50</Option>
-                    <Option value="More">More</Option>
-                  </Select>
-                </Form.Item>
-              </div>
-            </div>
+          <div className="flex flex-col md:flex-row md:space-x-4">
+            <Form.Item className="w-full">
+              <Select
+                placeholder="Number of Adults"
+                className="w-full"
+                onChange={(value) => setAdults(value)}
+              >
+                <Option value="0-50">0-50</Option>
+                <Option value="100-200">100-200</Option>
+                <Option value="200-300">200-300</Option>
+                <Option value="More">More</Option>
+              </Select>
+            </Form.Item>
 
-            <FormControl
-              component="fieldset"
-              className="flex justify-center items-center"
-            >
-              <FormGroup row className="items-center ">
+            <Form.Item className="w-full">
+              <Select
+                placeholder="Number of Children"
+                className="w-full"
+                onChange={(value) => setChildren(value)}
+              >
+                <Option value="0">0</Option>
+                <Option value="10-20">10-20</Option>
+                <Option value="30-50">30-50</Option>
+                <Option value="More">More</Option>
+              </Select>
+            </Form.Item>
+          </div>
+
+          <div className="flex justify-center space-x-6">
+            <FormControl component="fieldset">
+              <FormGroup row className="items-center">
                 <Radio
                   id="Ac"
                   {...controlProps("Ac")}
                   sx={{
                     color: yellow[800],
-                    "&.Mui-checked": {
-                      color: yellow[800],
-                    },
+                    "&.Mui-checked": { color: yellow[800] },
                   }}
                 />
                 <label htmlFor="Ac" className="cursor-pointer">
-                  Ac
+                  AC
                 </label>
 
                 <Radio
+                  id="NonAc"
                   {...controlProps("Non Ac")}
-                  id="Non Ac"
                   sx={{
                     color: yellow[800],
-                    "&.Mui-checked": {
-                      color: yellow[800],
-                    },
+                    "&.Mui-checked": { color: yellow[800] },
                   }}
                 />
-                <label htmlFor="Non Ac" className="cursor-pointer">
-                  Non Ac
+                <label htmlFor="NonAc" className="cursor-pointer">
+                  Non AC
                 </label>
               </FormGroup>
             </FormControl>
-            <label className="flex justify-center m-[5px]">
-              <button
-                type="submit"
-                className="text-maroon bg-creme font-medium rounded-md text-sm px-3 py-2"
-              >
-                Book
-              </button>
-            </label>
-          </form>
-        </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-yellow-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-yellow-600"
+          >
+            Book Now
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

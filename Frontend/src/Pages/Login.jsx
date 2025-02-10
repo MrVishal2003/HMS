@@ -13,7 +13,6 @@ function Login() {
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
-    // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -32,21 +31,16 @@ function Login() {
     }
 
     axios
-      .post('https://hms-api-ten.vercel.app/signin', { email, password })
+      .post("https://hms-api-ten.vercel.app/signin", { email, password })
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("isLoggedIn", "true");
-          // Successful login
           navigate("/", { state: { id: email } });
         } else {
-          // Handle login failure
-          console.error("Login failed:", response.data.message);
           alert("Incorrect email or password. Please try again.");
         }
       })
       .catch((error) => {
-        // Handle network errors or other exceptions
-        console.error("Error logging in:", error);
         alert("Error logging in. Please try again.");
       });
   };
@@ -54,54 +48,53 @@ function Login() {
   return (
     <>
       <Navbar />
-      <div>
-        <div className="min-h-screen flex items-center justify-center  bg-gray-100  text-maroon">
-          <div>
-            <div className="bg-maroon text-creme text-center text-2xl p-2">
-              Urban Sanctuary
-            </div>
-            <div className="bg-white p-8 rounded shadow-md w-full sm:w-96 max-w-md">
-              <h2 className="text-2xl mb-10 font-semibold flex justify-center">
-                Sign in
-              </h2>
-              <form className="space-y-10" onSubmit={handleLogin}>
-                <label className="block mb-2 relative">
-                  <AlternateEmailIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
-                  <input
-                    type="email"
-                    className="pl-8 border border-maroon p-2 w-full rounded-md"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-                <label className="block mb-2 relative">
-                  <LockIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
-                  <input
-                    type="password"
-                    className="pl-8 border border-maroon p-2 w-full rounded-md"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </label>
-                {error && <p className="text-red-500">{error}</p>}
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold text-center mb-6">Sign in</h2>
 
-                <label className="flex items-center">
-                  <p className="m-[10px]">Don&apos;t have an account yet?</p>
-
-                  <NavLink to="/Signup" className="font-semibold">
-                    Sign up
-                  </NavLink>
-                </label>
-                <label className="flex justify-center m-[5px] ">
-                  <Button name="Sign in" />
-                </label>
-              </form>
+          <form onSubmit={handleLogin} className="space-y-6">
+            {/* Email Input */}
+            <div className="relative">
+              <AlternateEmailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              <input
+                type="email"
+                className="pl-10 pr-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-maroon"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
-          </div>
+
+            {/* Password Input */}
+            <div className="relative">
+              <LockIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              <input
+                type="password"
+                className="pl-10 pr-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-maroon"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            {/* Sign Up Link */}
+            <div className="text-center text-sm">
+              <span>Don't have an account? </span>
+              <NavLink to="/Signup" className="font-semibold text-maroon">
+                Sign up
+              </NavLink>
+            </div>
+
+            {/* Sign In Button */}
+            <div className="flex justify-center">
+              <Button name="Sign in" />
+            </div>
+          </form>
         </div>
       </div>
     </>

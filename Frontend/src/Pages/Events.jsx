@@ -7,10 +7,17 @@ import Navbar from "../components/Navbar";
 function Events() {
   return (
     <>
-    <Navbar />
+      <Navbar />
+      
+      {/* Event Header */}
+      <div className="w-full">
+        <Layout1 name="EVENTS" img={img} />
+      </div>
 
-      <Layout1 name="EVENTS" img={img} />
-      <Layout3 />
+      {/* Event Content */}
+      <div className="container mx-auto px-4">
+        <Layout3 />
+      </div>
 
       <Footer />
     </>

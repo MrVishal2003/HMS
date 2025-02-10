@@ -9,7 +9,7 @@ function UserData() {
   useEffect(() => {
     // Fetch users from backend when component mounts
     axios
-      .get('https://hms-api-ten.vercel.app}/admin/users')
+      .get("https://hms-api-ten.vercel.app/admin/users")
       .then((response) => {
         setUsers(response.data);
       })
@@ -22,13 +22,10 @@ function UserData() {
     // Send DELETE request to delete user
     console.log(email);
     axios
-      .delete('https://hms-api-ten.vercel.app/admin/users/${email}')
+      .delete(`https://hms-api-ten.vercel.app/admin/users/${email}`)
       .then(() => {
         console.log("User deleted successfully");
-        // Update the users state by filtering out the deleted user
-        setUsers((prevUsers) =>
-          prevUsers.filter((user) => user.email !== email)
-        );
+        setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
       })
       .catch((error) => {
         console.error("Error deleting user:", error);
@@ -37,13 +34,12 @@ function UserData() {
 
   return (
     <>
-      <div className="text-center">
-        <div>
-          <h1 className="text-4xl font-bold m-4">Admin Panel</h1>
-        </div>
+      <div className="text-center px-4">
+        {/* Admin Panel Heading */}
+        <h1 className="text-3xl md:text-4xl font-bold m-4">Admin Panel</h1>
 
-        <div className="flex justify-center">
-          {" "}
+        {/* Navigation Buttons */}
+        <div className="flex flex-wrap justify-center gap-2 mb-6">
           <NavLink to="/UserData">
             <Button name="UserData" />
           </NavLink>
@@ -57,30 +53,31 @@ function UserData() {
             <Button name="EventData" />
           </NavLink>
         </div>
-        <h2 className="text-2xl font-bold m-10">User Data</h2>
-        <div className="flex justify-center items-center">
-          <table className="border border-black w-full">
+
+        {/* User Data Heading */}
+        <h2 className="text-2xl font-bold my-6">User Data</h2>
+
+        {/* Responsive Table */}
+        <div className="overflow-x-auto">
+          <table className="border border-black w-full max-w-4xl mx-auto text-xs sm:text-base">
             <thead>
-              <tr className="font-bold text-lg">
-                <td>Name</td>
-                <td>Surname</td>
-                <td>Email id.</td>
-                <td>Phone no.</td>
-                <td>Delete</td>
+              <tr className="font-bold bg-gray-200">
+                <th className="p-2">Name</th>
+                <th className="p-2">Surname</th>
+                <th className="p-2">Email ID</th>
+                <th className="p-2">Phone No.</th>
+                <th className="p-2">Delete</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.firstname}</td>
-                  <td>{user.lastname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.phone}</td>
-                  <td>
-                    <Button
-                      name="Delete"
-                      onClick={() => handleDelete(user.email)}
-                    />
+                <tr key={user._id} className="border-t text-center">
+                  <td className="p-2">{user.firstname}</td>
+                  <td className="p-2">{user.lastname}</td>
+                  <td className="p-2">{user.email}</td>
+                  <td className="p-2">{user.phone}</td>
+                  <td className="p-2">
+                    <Button name="Delete" onClick={() => handleDelete(user.email)} />
                   </td>
                 </tr>
               ))}

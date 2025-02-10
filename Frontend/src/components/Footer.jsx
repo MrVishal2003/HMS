@@ -7,88 +7,95 @@ function Footer() {
   return (
     <>
       <footer className="z-2">
-        <hr className="border-l" />
-        <div className="m-[40px]">
-          <div className="flex justify-center m-[20px]">
-            <h3 className="text-xl font-semibold ">We also offer:</h3>
+        <hr className="border-gray-300" />
+        <div className="m-4 sm:m-10">
+          <div className="flex justify-center m-4 sm:m-6">
+            <h3 className="text-lg sm:text-xl font-semibold text-center">
+              We also offer:
+            </h3>
           </div>
-          <div className="flex justify-evenly flex-wrap">
-            <div className="w-full sm:w-[45%] md:w-[30%] lg:w-[15%]">
-              <ul className="list-disc">
+
+          <div className="flex flex-wrap justify-center sm:justify-evenly gap-4">
+            <div className="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]">
+              <ul className="list-disc pl-4">
                 <li>Parking</li>
-                <li>Free Wi-fi</li>
-                <li>Adequate safety/ security</li>
+                <li>Free Wi-Fi</li>
+                <li>Adequate safety/security</li>
                 <li>Laundry services</li>
               </ul>
             </div>
-            <div className="w-full sm:w-[45%] md:w-[30%] lg:w-[15%]">
-              <ul className="list-disc">
+            <div className="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]">
+              <ul className="list-disc pl-4">
                 <li>Delicious meals</li>
                 <li>Air cooling in all rooms</li>
                 <li>Room services</li>
-                <li>Ticket books</li>
+                <li>Ticket booking</li>
               </ul>
             </div>
-            <div className="w-full sm:w-[45%%] md:w-[30%] lg:w-[15%]">
-              <ul className="list-disc">
-                <li>
-                  Shuffle/ Private transfers Neccessities for babies and
-                  children
-                </li>
+            <div className="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]">
+              <ul className="list-disc pl-4">
+                <li>Shuttle/Private transfers</li>
+                <li>Necessities for babies and children</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-evenly bg-maroon text-white p-8">
-          <div className="grid mb-4 sm:mb-0">
-            <h2 className="text-2xl font-semibold text-creme">
+        {/* Contact Section */}
+        <div className="flex flex-col sm:flex-row justify-evenly bg-maroon text-white p-4 sm:p-8">
+          {/* Left Section - Contact Details */}
+          <div className="grid gap-2 text-center sm:text-left mb-6 sm:mb-0">
+            <h2 className="text-xl sm:text-2xl font-semibold text-creme">
               Urban Sanctuary
             </h2>
-            <p>
+            <p className="flex items-center gap-2">
               <ShareLocationIcon />
-              Address: SG Highway, Ahmedabad
+              SG Highway, Ahmedabad
             </p>
-            <p>
+            <p className="flex items-center gap-2">
               <PhoneInTalkIcon />
-              Phone number: +919725771714
+              +91 9725771714
             </p>
-            <p>
+            <p className="flex items-center gap-2">
               <MarkEmailReadIcon />
-              Email: urban_sanctuary@gmail.com
+              urban_sanctuary@gmail.com
             </p>
           </div>
 
-          <div className="border-l border-white hidden sm:block"></div>
+          {/* Divider for larger screens */}
+          <div className="hidden sm:block border-l border-white"></div>
 
-          <div className="flex flex-col justify-center">
-            <div className="text-creme font-semibold text-2xl m-2">
-              <h2>Contact Us!</h2>
-            </div>
-            <br />
+          {/* Right Section - Contact Form */}
+          <div className="flex flex-col justify-center w-full sm:w-auto">
+            <h2 className="text-creme font-semibold text-xl sm:text-2xl text-center sm:text-left mb-2">
+              Contact Us!
+            </h2>
+
             <form className="text-black">
-              <div className="grid">
-                <div className="flex flex-col sm:flex-row w-full">
+              <div className="grid gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <input
                     name="F Name"
                     placeholder="First Name"
-                    className="m-2 p-2 h-[30px] rounded-sm"
+                    className="w-full sm:w-auto m-1 p-2 h-10 rounded-md"
                   />
                   <input
                     name="L Name"
                     placeholder="Last Name"
-                    className="m-2 p-2 h-[30px] rounded-sm"
+                    className="w-full sm:w-auto m-1 p-2 h-10 rounded-md"
                   />
                 </div>
 
                 <input
+                  type="email"
                   placeholder="Email"
-                  className="w-[96%] h-[30px] m-2 p-2 rounded-sm"
+                  className="w-full m-1 p-2 h-10 rounded-md"
                 />
-                <input
+                <textarea
                   placeholder="Message"
-                  className="w-[96%] h-[30px] m-2 p-2 rounded-sm"
+                  className="w-full m-1 p-2 h-20 rounded-md resize-none"
                 />
+                
                 <Button name="Register" />
               </div>
             </form>

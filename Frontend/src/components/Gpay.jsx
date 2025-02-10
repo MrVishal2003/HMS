@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import GooglePayButton from "@google-pay/button-react";
 
-const Gpay = (props) => {
+const Gpay = ({ total }) => {
   return (
-    <>
+    <div className="w-full flex justify-center p-2 sm:p-4">
       <GooglePayButton
         environment="TEST"
         paymentRequest={{
@@ -32,7 +32,7 @@ const Gpay = (props) => {
           transactionInfo: {
             totalPriceStatus: "FINAL",
             totalPriceLabel: "Total",
-            totalPrice: `${props.total}`,
+            totalPrice: `${total}`,
             currencyCode: "INR",
             countryCode: "IN",
           },
@@ -49,16 +49,10 @@ const Gpay = (props) => {
         existingPaymentMethodRequired="false"
         buttonColor="black"
         buttonType="buy"
-      ></GooglePayButton>
-    </>
+        className="max-w-[300px] sm:max-w-[400px]"
+      />
+    </div>
   );
 };
+
 export default Gpay;
-
-// biji file ma component import kari ne je total devo hoi e props ma
-// lakhi nakhje
-
-// niche no code bija file ma lakhvano
-
-// import Gpay from "./Payment";
-//  <Gpay total={total} />

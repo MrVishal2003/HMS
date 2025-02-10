@@ -19,10 +19,11 @@ import Navbar from "../components/Navbar";
 function Gallery() {
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Layout1 name="GALLERY" img={img} />
-      <div className="flex flex-wrap justify-evenly m-[15px]">
-        <div className="grid grid-cols-3 gap-5">
+      
+      <div className="flex justify-center px-4 pb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-6xl">
           <Layout5 img={pic} />
           <Layout5 img={pic1} />
           <Layout5 img={pic2} />
@@ -37,6 +38,7 @@ function Gallery() {
           <Layout5 img={pic11} />
         </div>
       </div>
+
       <Footer />
     </>
   );

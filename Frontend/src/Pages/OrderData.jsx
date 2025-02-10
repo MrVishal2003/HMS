@@ -7,9 +7,8 @@ function OrderData() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    // Fetch orders from backend when component mounts
     axios
-      .get('https://hms-api-ten.vercel.app/bkorder')
+      .get("https://hms-api-ten.vercel.app/bkorder")
       .then((response) => {
         setOrders(response.data);
       })
@@ -19,15 +18,11 @@ function OrderData() {
   }, []);
 
   const handleDelete = (orderId) => {
-    // Send DELETE request to delete order
-    console.log(orderId);
     axios
-      .delete('https://hms-api-ten.vercel.app/bkorder/${orderId}')
+      .delete(`https://hms-api-ten.vercel.app/bkorder/${orderId}`)
       .then(() => {
-        console.log("order deleted successfully");
-        // Update the orders state by filtering out the deleted order
         setOrders((prevOrders) =>
-          prevOrders.filter((order) => order.orderId !== orderId)
+          prevOrders.filter((order) => order._id !== orderId)
         );
       })
       .catch((error) => {
@@ -36,57 +31,61 @@ function OrderData() {
   };
 
   return (
-    <>
-      <div className="text-center">
-        <div>
-          <h1 className="text-4xl font-bold m-4">Admin Panel</h1>
-        </div>
-        <div className="flex justify-center">
-          {" "}
-          <NavLink to="/UserData">
-            <Button name="UserData" />
-          </NavLink>
-          <NavLink to="/RoomData">
-            <Button name="RoomData" />
-          </NavLink>
-          <NavLink to="/OrderData">
-            <Button name="OrderData" />
-          </NavLink>
-          <NavLink to="/EventData">
-            <Button name="EventData" />
-          </NavLink>
-        </div>
-        <h2 className="text-2xl font-bold m-10">Order Data</h2>
+    <div className="text-center p-4">
+      <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
 
-        <div className="flex justify-center items-center">
-          <table className="border border-black w-full">
-            <thead>
-              <tr className="font-bold text-lg">
-                <td>Order Type</td>
-                <td>Cold Drinks</td>
-                <td>Desert</td>
-                <td>Delete</td>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order.orderType}</td>
-                  <td>{order.colddrink}</td>
-                  <td>{order.desert}</td>
-                  <td>
-                    <Button
-                      name="Delete"
-                      onClick={() => handleDelete(order.orderId)}
-                    />
+      {/* Navigation Buttons */}
+      <div className="flex flex-wrap justify-center gap-3 mb-8">
+        <NavLink to="/UserData">
+          <Button name="User Data" />
+        </NavLink>
+        <NavLink to="/RoomData">
+          <Button name="Room Data" />
+        </NavLink>
+        <NavLink to="/OrderData">
+          <Button name="Order Data" />
+        </NavLink>
+        <NavLink to="/EventData">
+          <Button name="Event Data" />
+        </NavLink>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-6">Order Data</h2>
+
+      {/* Responsive Table Wrapper */}
+      <div className="overflow-x-auto">
+        <table className="w-full border border-black min-w-[600px]">
+          <thead>
+            <tr className="bg-gray-200 text-black text-lg">
+              <th className="p-2 border">Order Type</th>
+              <th className="p-2 border">Cold Drinks</th>
+              <th className="p-2 border">Desert</th>
+              <th className="p-2 border">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.length > 0 ? (
+              orders.map((order) => (
+                <tr key={order._id} className="text-center border">
+                  <td className="p-2 border">{order.orderType}</td>
+                  <td className="p-2 border">{order.colddrink}</td>
+                  <td className="p-2 border">{order.desert}</td>
+                  <td className="p-2 border">
+                    <Button name="Delete" onClick={() => handleDelete(order._id)} />
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="p-4 text-gray-500">
+                  No orders found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 }
 

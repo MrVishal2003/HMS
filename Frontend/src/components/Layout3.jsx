@@ -11,50 +11,27 @@ import img6 from "../Images/gathering.jpg";
 import { NavLink } from "react-router-dom";
 
 const images = [
-  {
-    title: "WEDDING",
-    image: img1,
-    width: "40%",
-  },
-  {
-    title: "BIRTHDAY",
-    image: img2,
-    width: "40%",
-  },
-  {
-    title: "ANNIVERSARY",
-    image: img3,
-    width: "40%",
-  },
-  {
-    title: "CULTURAL",
-    image: img4,
-    width: "40%",
-  },
-  {
-    title: "FESTIVAL",
-    image: img5,
-    width: "40%",
-  },
-  {
-    title: "GATHERING",
-    image: img6,
-    width: "40%",
-  },
+  { title: "WEDDING", image: img1 },
+  { title: "BIRTHDAY", image: img2 },
+  { title: "ANNIVERSARY", image: img3 },
+  { title: "CULTURAL", image: img4 },
+  { title: "FESTIVAL", image: img5 },
+  { title: "GATHERING", image: img6 },
 ];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: "relative",
-  height: 400,
+  height: 200, // Reduced height for better mobile display
+  width: "100%", // Ensures full width on small screens
 
   "&:hover, &.Mui-focusVisible": {
     zIndex: 1,
     "& .MuiTypography-root": {
-      border: `4px solid ${theme.palette.common.white}`,
+      border: `2px solid ${theme.palette.common.white}`,
       visibility: "visible",
     },
     "& .bg-cover": {
-      filter: "blur(4px)",
+      filter: "blur(2px)", // Softer blur effect
     },
   },
 }));
@@ -62,22 +39,19 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
 export default function Layout3() {
   return (
     <Box>
-      <div className="flex flex-wrap justify-around m-5">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-4 p-2 sm:p-4">
         {images.map((image, index) => (
           <ImageButton
             key={image.title}
-            style={{
-              width: image.width,
-              marginBottom: index < images.length - 1 ? "20px" : 0,
-            }}
+            className="w-full sm:w-[48%] md:w-[30%] lg:w-[20%]"
           >
             <div
-              className="absolute inset-0 bg-cover bg-center transition-opacity border border-maroon"
+              className="absolute inset-0 bg-cover bg-center border border-maroon transition-opacity rounded-lg"
               style={{ backgroundImage: `url(${image.image})` }}
             ></div>
             <Typography
               component="span"
-              className="p-2 pt-2 text-white relative invisible"
+              className="p-1 sm:p-2 text-white font-semibold text-sm sm:text-lg absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 bg-maroon bg-opacity-70 px-3 py-1 sm:px-4 sm:py-1.5 rounded-md"
             >
               <NavLink to="/BookEvent">{image.title}</NavLink>
             </Typography>

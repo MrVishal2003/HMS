@@ -8,11 +8,12 @@ import Navbar from "../components/Navbar";
 function AboutUs() {
   return (
     <>
-    <Navbar />
-
+      <Navbar />
       <Layout1 name="ABOUT US" img={img} />
-      <div className="flex flex-col md:flex-row justify-evenly m-[40px] space-x-5 space-y-2">
-        <div className="space-y-5">
+
+      {/* Section 1: Hotel Introduction */}
+      <div className="flex flex-col md:flex-row items-center justify-evenly m-5 space-y-8 md:space-y-0 md:space-x-5">
+        <div className="max-w-lg space-y-5 text-center md:text-left">
           <h2 className="text-2xl font-bold">
             Welcome to Our Hotel: Where Comfort Meets Luxury
           </h2>
@@ -21,13 +22,13 @@ function AboutUs() {
             Discover a haven of relaxation and indulgence at our hotel. Our
             well-appointed rooms and suites provide the perfect blend of comfort
             and elegance. Each room is designed with your utmost relaxation in
-            mind, ensuring a peaceful nights sleep.
+            mind, ensuring a peaceful night's sleep.
           </p>
           <h2 className="text-xl font-semibold">Culinary Delights</h2>
           <p>
             Savor exquisite flavors at our in-house restaurants. Our talented
             chefs craft culinary masterpieces using fresh, local ingredients.
-            Whether youre craving international cuisine, local delicacies, or a
+            Whether you’re craving international cuisine, local delicacies, or a
             quick snack, our dining options cater to every palate.
           </p>
           <h2 className="text-xl font-semibold">Wellness and Recreation</h2>
@@ -38,38 +39,43 @@ function AboutUs() {
             are equipped to keep you energized throughout your stay.
           </p>
         </div>
-        <div className="flex items-end mt-28">
-          <div className="relative top-0 left-0 mr-14 mb-20 w-[500px]">
+
+        {/* Image Section */}
+        <div className="relative w-full md:w-1/2 flex justify-center">
+          <div className="relative w-64 sm:w-80">
             <img
-              className="absolute bottom-10 left-10 border border-black h-80 brightness-50"
+              className="absolute bottom-5 left-5 border border-black h-72 brightness-50"
               src={img1}
-              alt=""
+              alt="Hotel Happenings"
             />
             <img
-              className="relative top-0 left-0 border border-black h-80 transition-transform hover:scale-105 hover:brightness-100 brightness-90"
+              className="relative border border-black h-72 transition-transform hover:scale-105 hover:brightness-100 brightness-90"
               src={img1}
-              alt=""
+              alt="Hotel Happenings"
             />
           </div>
         </div>
       </div>
 
-      <div className="flex md:flex-row justify-around m-[40px] space-x-5">
-        <div className="">
-          <div className="relative top-0 left-0 mr-16 mb-20 w-[500px]">
+      {/* Section 2: Meetings & Modern Amenities */}
+      <div className="flex flex-col-reverse md:flex-row items-center justify-evenly m-5 space-y-8 md:space-y-0 md:space-x-5">
+        {/* Image Section */}
+        <div className="relative w-full md:w-1/2 flex justify-center">
+          <div className="relative w-64 sm:w-80">
             <img
-              className="relative top-0 left-0 border border-black h-80 brightness-50"
+              className="relative border border-black h-72 brightness-50"
               src={img2}
-              alt=""
+              alt="Hotel Facilities"
             />
             <img
-              className="absolute top-10 left-10 border border-black h-80 transition-transform hover:scale-105 hover:brightness-100 brightness-90"
+              className="absolute top-5 left-5 border border-black h-72 transition-transform hover:scale-105 hover:brightness-100 brightness-90"
               src={img2}
-              alt=""
+              alt="Hotel Facilities"
             />
           </div>
         </div>
-        <div className="space-y-5">
+
+        <div className="max-w-lg space-y-5 text-center md:text-left">
           <h2 className="text-xl font-semibold">Meetings and Events</h2>
           <p>
             Host successful meetings and events in our state-of-the-art
@@ -94,32 +100,6 @@ function AboutUs() {
         </div>
       </div>
 
-      {/* <div className="flex justify-evenly flex-wrap m-[10px]">
-        <div className="w-[30%] mx-[30px] my-[10px]">
-          <img src={img} alt="" />
-          <p className="text-center"> Swimming Pool</p>
-        </div>
-        <div className="w-[30%] mx-[30px] my-[10px]">
-          <img src={img} alt="" />
-          <p className="text-center"> Gym</p>
-        </div>
-        <div className="w-[30%] mx-[30px] my-[10px]">
-          <img src={img} alt="" />
-          <p className="text-center"> Resturants & Bar</p>
-        </div>
-        <div className="w-[30%] mx-[30px] my-[10px]">
-          <img src={img} alt="" />
-          <p className="text-center"> Spa</p>
-        </div>
-        <div className="w-[30%] mx-[30px] my-[10px]">
-          <img src={img} alt="" />
-          <p className="text-center"> Game zone</p>
-        </div>
-        <div className="w-[30%] mx-[30px] my-[10px]">
-          <img src={img} alt="" />
-          <p className="text-center"> Banquet Hall</p>
-        </div>
-      </div> */}
       <Footer />
     </>
   );
