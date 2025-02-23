@@ -1,6 +1,6 @@
 # Hotel-Management-System
 
-[![Deploy on Vercel](https://img.shields.io/badge/Live%20Demo-Vercel-blue)]([https://todo-app-gamma-blue-99.vercel.app/](https://hms-seven-silk.vercel.app/))
+[![Deploy on Vercel](https://img.shields.io/badge/Live%20Demo-Vercel-blue)]([[https://todo-app-gamma-blue-99.vercel.app/](https://hms-seven-silk.vercel.app/)](https://hms-seven-silk.vercel.app/))
 
 The **Hotel Management System** is a web application built using the **MERN stack** (MongoDB, Express.js, React.js, and Node.js) to streamline hotel operations such as room booking, guest management, and event management.
 
